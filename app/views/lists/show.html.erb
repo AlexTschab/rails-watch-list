@@ -1,6 +1,36 @@
 
-  <h1><%= @list.name %></h1>
+<h1><%= @list.name %></h1>
+
+<%= link_to "add movie",  new_list_bookmark_path(@list)%>
+
+<div class= "cards">
+  <% @list.bookmarks.each do |bookmark| %>
+  <% bookmark = Bookmark.find_by(list: @list, movie: bookmark.movie) %>
+  <div class="card">
+    <div class="card-img">
+      <%= image_tag bookmark.movie.poster_url, alt: "Le Wagon", width: 350, height: 200 %>
+    </div>
+    <div class="card-text-header">
+      <p><%= bookmark.movie.title %></p>
+      <p><%= bookmark.movie.rating %></p>
+    </div>
+    <p><%= bookmark.movie.overview %></p>
+    <div class= "card-text-footer">
+      <%= bookmark.comment %>
+      <%= link_to "delte bookmark", bookmark_path(bookmark),  data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+
+
+
+
+
+<div class="page-bottom">
 
   <p><%= link_to "Edit list name", edit_list_path %></p>
 
   <p><%= link_to "Back to all Lists", lists_path %></p>
+</div>
